@@ -17,12 +17,12 @@ defmodule Prueba.Event do
     struct
     |> cast(params, [:name, :description, :start_date, :end_time])
     |> validate_required([:name, :description, :start_date, :end_time])
-    |> validate_proper_daterange(:start_date, :end_date)
+    |> validate_proper_range(:start_date, :end_time)
   end
 
-  defp validate_proper_daterange(changeset, start_date_field, end_date_field) do
-    if get_field(changeset, start_date_field) <= get_field(changeset, end_date_field) do
-      add_error(changeset, :nose, "start date cannot happen before end_date")
+  defp validate_proper_range(changeset, lower_bound, upper_bound) do
+    if get_field(changeset, lower_bound) >= get_field(changeset, upper_bound) do
+      add_error(changeset, "#{lower_bound}-#{upper_bound}", "#{lower_bound} cannot happen before #{upper_bound}")
     else
       changeset
     end
