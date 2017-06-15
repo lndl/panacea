@@ -5,7 +5,7 @@ defmodule Prueba.Event do
     field :name, :string
     field :description, :string
     field :start_date, Ecto.DateTime
-    field :end_time, Ecto.DateTime
+    field :end_date, Ecto.DateTime
 
     timestamps()
   end
@@ -15,9 +15,9 @@ defmodule Prueba.Event do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name, :description, :start_date, :end_time])
-    |> validate_required([:name, :description, :start_date, :end_time])
-    |> validate_proper_range(:start_date, :end_time)
+    |> cast(params, [:name, :description, :start_date, :end_date])
+    |> validate_required([:name, :description, :start_date, :end_date])
+    |> validate_proper_range(:start_date, :end_date)
   end
 
   defp validate_proper_range(changeset, lower_bound, upper_bound) do

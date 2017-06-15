@@ -8,8 +8,9 @@ defmodule Prueba.EventController do
     render(conn, "index.json-api", data: events)
   end
 
-  def create(conn, %{"event" => event_params}) do
-    changeset = Event.changeset(%Event{}, event_params)
+  def create(conn, %{"data" => data}) do
+    event_attrs = JaSerializer.Params.to_attributes(data)
+    changeset = Event.changeset(%Event{}, event_attrs)
 
     case Repo.insert(changeset) do
       {:ok, event} ->
@@ -29,13 +30,14 @@ defmodule Prueba.EventController do
     render(conn, "show.json-api", data: event)
   end
 
-  def update(conn, %{"id" => id, "event" => event_params}) do
+  def update(conn, %{"id" => id, "data" => data}) do
     event = Repo.get!(Event, id)
-    changeset = Event.changeset(event, event_params)
+    event_attrs = JaSerializer.Params.to_attributes(data)
+    changeset = Event.changeset(event, event_attrs)
 
     case Repo.update(changeset) do
       {:ok, event} ->
-        render(conn, "show.json-api", data: event)
+        render(conn, "show.json-api", data: event_attrs)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

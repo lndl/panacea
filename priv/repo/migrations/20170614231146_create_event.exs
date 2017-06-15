@@ -5,11 +5,10 @@ defmodule Prueba.Repo.Migrations.CreateEvent do
     create table(:events) do
       add :name, :string
       add :description, :string
-      add :start_date, :datetime
-      add :end_time, :datetime
+      add :start_date, :utc_datetime
+      add :end_date, :utc_datetime
 
       timestamps()
     end
-
   end
 end
