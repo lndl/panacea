@@ -5,7 +5,7 @@ defmodule Prueba.EventController do
 
   def index(conn, _params) do
     events = Repo.all(Event)
-    render(conn, "index.json", events: events)
+    render(conn, "index.json-api", data: events)
   end
 
   def create(conn, %{"event" => event_params}) do
@@ -16,7 +16,7 @@ defmodule Prueba.EventController do
         conn
         |> put_status(:created)
         |> put_resp_header("location", event_path(conn, :show, event))
-        |> render("show.json", event: event)
+        |> render("show.json-api", data: event)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -26,7 +26,7 @@ defmodule Prueba.EventController do
 
   def show(conn, %{"id" => id}) do
     event = Repo.get!(Event, id)
-    render(conn, "show.json", event: event)
+    render(conn, "show.json-api", data: event)
   end
 
   def update(conn, %{"id" => id, "event" => event_params}) do
@@ -35,7 +35,7 @@ defmodule Prueba.EventController do
 
     case Repo.update(changeset) do
       {:ok, event} ->
-        render(conn, "show.json", event: event)
+        render(conn, "show.json-api", data: event)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

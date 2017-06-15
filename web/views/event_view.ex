@@ -1,13 +1,14 @@
 defmodule Prueba.EventView do
   use Prueba.Web, :view
+  use JaSerializer.PhoenixView
 
-  def render("index.json", %{events: events}) do
-    %{data: render_many(events, Prueba.EventView, "event.json")}
-  end
+  #def render("index.json", %{events: events}) do
+  #  %{data: render_many(events, Prueba.EventView, "event.json")}
+  #end
 
-  def render("show.json", %{event: event}) do
-    %{data: render_one(event, Prueba.EventView, "event.json")}
-  end
+  #def render("show.json", %{event: event}) do
+  #  %{data: render_one(event, Prueba.EventView, "event.json")}
+  #end
 
   def render("event.json", %{event: event}) do
     %{id: event.id,
